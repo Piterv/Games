@@ -2,9 +2,31 @@ const imgDom = document.querySelectorAll(".container img");
 const heading = document.querySelector(".result");
 const scorePlayer1Dom = document.querySelector(".score-Player1");
 const scorePlayer2Dom = document.querySelector(".score-Player2");
-// Game score.
+// Default game score.
 var scorePlayer1 = 0;
 var scorePlayer2 = 0;
+
+// Add event listener to the button Add name.
+var player1Name;
+var player2Name;
+
+const userNameButtons = document.querySelectorAll('button.player').forEach(buttonUserName => {
+  buttonUserName.addEventListener('click', event => {
+    console.log(event.target.name);
+
+    if (event.target.name == 'button1') {
+      player1Name = prompt("type your name");
+      const hiddenButtonPlayer1 = event.target.hidden = true;
+      const showPlayer1Name = document.querySelector('.player1-name').innerHTML = player1Name;
+
+    } else {
+      player2Name = prompt("type your name");
+      const hiddenButtonPlayer2 = event.target.hidden = true;
+      const showPlayer2Name = document.querySelector('.player2-name').innerHTML = player2Name;
+
+    }
+  });
+});
 
 //The Function creates and return one random image.
 function randomDiceImage() {
@@ -22,7 +44,7 @@ function setImage() {
   }, 700);
 
   setTimeout(() => {
-   gameResult();
+    gameResult();
   }, 1000);
 
 }
@@ -48,4 +70,13 @@ function gameResult() {
 
   const setScorePlayer1 = document.querySelector(".score-Player1").innerHTML = scorePlayer1;
   const setScorePlayer2 = document.querySelector(".score-Player2").innerHTML = scorePlayer2;
+}
+
+// Player name.
+
+function userName(event) {
+
+  const userName = event.name;
+
+  console.log(userName);
 }

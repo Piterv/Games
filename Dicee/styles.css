@@ -37,7 +37,10 @@ h1 {
   font-size: 8rem;
   color: #4ECCA3;
 }
-
+.player{
+  width: 100px;
+  height: 35px;
+}
 p {
   font-size: 2rem;
   color: #4ECCA3;
