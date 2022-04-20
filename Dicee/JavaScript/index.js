@@ -6,6 +6,9 @@ const heading = document.querySelector(".result");
 const playerOneScoreDom = document.querySelector(".score-Player1");
 const playerTwoScoreDom = document.querySelector(".score-Player2");
 //
+const playerOneScoreHide = document.querySelector(".score-Player1").hidden = true;
+const playerTwoScoreHide = document.querySelector(".score-Player2").hidden = true;
+//
 const player1 = document.querySelector('.player1-name');
 const player2 = document.querySelector('.player2-name');
 // Default game score.
@@ -24,6 +27,7 @@ const userNameButtons = document.querySelectorAll('button').forEach(buttonUserNa
 function startGame(event) {
   if (event.target.name === 'button1' || event.target.name === 'button2') {
     setName(event);
+    addScoreBlock();
   } else if (event.target.name === 'start') {
     if (playerOneScore === 0 && playerTwoScore === 0) {
       setName(event);
@@ -161,3 +165,9 @@ function buttonNameToggle(event) {
     }
   }
 }
+//
+function addScoreBlock(){
+  document.querySelector(".score-Player1").hidden = false;
+  document.querySelector(".score-Player2").hidden = false;
+}
+//
