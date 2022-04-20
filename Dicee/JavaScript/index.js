@@ -1,5 +1,4 @@
-//
-var buttonName1 = document.querySelector('.player1-name button');
+const playerNameButtons = document.querySelectorAll('.container button');
 //
 const imgDom = document.querySelectorAll(".container img");
 const heading = document.querySelector(".result");
@@ -15,7 +14,6 @@ var playerTwoScore = 0;
 // Store player name.
 var playerOneName;
 var playerTwoName;
-
 //Add event listener for all buttons.
 const userNameButtons = document.querySelectorAll('button').forEach(buttonUserName => {
   buttonUserName.addEventListener('click', event => {
@@ -43,9 +41,8 @@ function startGame(event) {
         gameResult();
       }, 1000);
     }
-  } else {
-
-    StartOver(event);
+  } else if (event.target.name === 'reload') {
+    buttonNameToggle(event);
   }
 }
 //The Function creates and return one random image.
@@ -56,12 +53,8 @@ function randomDiceImage() {
 }
 //Function rundomly set imiges by clicking button Start.
 function setImage() {
-  setTimeout(() => {
-    const imgForPlayerOne = imgDom[0].setAttribute("src", randomDiceImage());
-  }, 400);
-  setTimeout(() => {
-    const imgForPlayerTwo = imgDom[1].setAttribute("src", randomDiceImage());
-  }, 700);
+  const imgForPlayerOne = imgDom[0].setAttribute("src", randomDiceImage());
+  const imgForPlayerTwo = imgDom[1].setAttribute("src", randomDiceImage());
 }
 //Function determines winer.
 function gameResult() {
@@ -82,81 +75,89 @@ function gameResult() {
   playerOneScoreDom.textContent = playerOneScore;
   playerTwoScoreDom.textContent = playerTwoScore;
 }
-
 //Set player's name.
 function setName(event) {
-
-  const name1Type = typeof playerOneName;
-  const name2Type = typeof playerTwoName;
 
   if (event.target.name == 'button1') {
     playerOneName = prompt("type your name");
     if (playerOneName === "") {
-        buttonToggle(event);
-
+      buttonNameToggle(event);
       playerOneName = player1.textContent = "Player1";
     } else if (playerOneName === null) {
-      event.target.hidden = true;
+      buttonNameToggle(event);
       playerOneName = player1.textContent = "Player1";
     } else {
-      event.target.hidden = true;
-      player1.textContent = playerOneName;
+      buttonNameToggle(event);
+      playerOneName = player1.textContent = playerOneName;
     }
   } else if (event.target.name == 'button2') {
     playerTwoName = prompt("type your name");
     if (playerTwoName === "") {
-      event.target.hidden = true;
+      buttonNameToggle(event)
       playerTwoName = player2.textContent = "Player2";
     } else if (playerTwoName === null) {
-      event.target.hidden = true;
+      buttonNameToggle(event)
       playerTwoName = player2.textContent = "Player2";
     } else {
-      event.target.hidden = true;
+      buttonNameToggle(event)
       player2.textContent = playerTwoName;
     }
   } else if (event.target.name == 'start') {
     if (playerOneName === undefined && playerTwoName === undefined) {
-      document.querySelector('.player1-name button').hidden = true;
+      buttonNameToggle(event)
       playerOneName = player1.textContent = "Player1";
-      document.querySelector('.player2-name button').hidden = true;
       playerTwoName = player2.textContent = "Player2";
-    } else if (name1Type === 'string' && name2Type === 'undefined') {
-      document.querySelector('.player2-name button').hidden = true;
+    } else if (typeof playerOneName === 'string' && typeof playerTwoName === 'undefined') {
+      buttonNameToggle(event)
       playerTwoName = player2.textContent = "Player2";
-    } else if (name1Type === 'undefined' && name2Type === 'string') {
-      document.querySelector('.player1-name button').hidden = true;
+    } else if (typeof playerOneName === 'undefined' && typeof playerTwoName === 'string') {
+      buttonNameToggle(event)
       playerOneName = player1.textContent = "Player1";
     }
   }
 }
-//
-function buttonToggle(event) {
-  console.log(buttonName1);
-if (true) {
-  buttonName1.toggleAttribute('hidden');
-}else {
-  buttonName1.toggleAttribute('hidden');
+//Toggle buttons Add name.
+function buttonNameToggle(event) {
+
+  if (event.target.name === 'button1') {
+    playerNameButtons[0].hidden = true;
+  } else if (event.target.name === 'button2') {
+    playerNameButtons[1].hidden = true;
+  } else if (event.target.name === 'reload') {
+    if (playerNameButtons[0].hasAttribute("hidden") === true && playerNameButtons[1].hasAttribute("hidden") === false) {
+      player1.textContent = "";
+      playerOneName = undefined;
+      player1.appendChild(playerNameButtons[0]);
+      playerNameButtons[0].hidden = false;
+    } else if (playerNameButtons[0].hasAttribute("hidden") === false && playerNameButtons[1].hasAttribute("hidden") === true) {
+      playerTwoName = undefined;
+      player2.textContent = "";
+      player2.appendChild(playerNameButtons[1]);
+      playerNameButtons[1].hidden = false;
+    } else if (playerNameButtons[0].hasAttribute("hidden") === true && playerNameButtons[1].hasAttribute("hidden") === true) {
+      playerOneScore = 0;
+      playerTwoScore = 0;
+      playerOneName = undefined;
+      playerTwoName = undefined;
+      //
+      player1.textContent = "";
+      player2.textContent = "";
+      player1.appendChild(playerNameButtons[0]);
+      player2.appendChild(playerNameButtons[1]);
+      playerNameButtons[0].hidden = false;
+      playerNameButtons[1].hidden = false;
+      playerOneScoreDom.textContent = playerOneScore;
+      playerTwoScoreDom.textContent = playerTwoScore
+      document.querySelector(".result").textContent = "Refresh Me";
+    }
+  } else if (event.target.name === 'start') {
+    if (playerNameButtons[0].hasAttribute("hidden") === false && playerNameButtons[1].hasAttribute("hidden") === false) {
+      playerNameButtons[0].hidden = true;
+      playerNameButtons[1].hidden = true;
+    } else if (playerNameButtons[0].hasAttribute("hidden") === true && playerNameButtons[1].hasAttribute("hidden") === false) {
+      playerNameButtons[1].hidden = true;
+    } else if (playerNameButtons[0].hasAttribute("hidden") === false && playerNameButtons[1].hasAttribute("hidden") === true) {
+      playerNameButtons[0].hidden = true;
+    }
+  }
 }
-
-
-}
-
-//Function reset all parameters to default.
-function StartOver(event) {
-  playerOneScore = 0;
-  playerTwoScore = 0;
-  playerOneName = '';
-  playerTwoName = '';
-
-  player1.textContent = '';
-  player2.textContent = '';
-
-  document.querySelector(".result").textContent = "Refresh Me";
-  playerOneScoreDom.textContent = playerOneScore;
-  playerTwoScoreDom.textContent = playerTwoScore;
-
-  buttonToggle(event);
-
-
-}
-//Toggle between hiding and showing an element.
