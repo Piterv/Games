@@ -31,19 +31,20 @@ function startGame(event) {
   } else if (event.target.name === 'start') {
     if (playerOneScore === 0 && playerTwoScore === 0) {
       setName(event);
+      addScoreBlock();
       setTimeout(() => {
         setImage()
       }, 500);
       setTimeout(() => {
         gameResult();
-      }, 1500);
+      }, 800);
     } else {
       setTimeout(() => {
         setImage();
-      }, 100);
+      }, 300);
       setTimeout(() => {
         gameResult();
-      }, 1000);
+      }, 800);
     }
   } else if (event.target.name === 'reload') {
     buttonNameToggle(event);
@@ -58,7 +59,9 @@ function randomDiceImage() {
 //Function rundomly set imiges by clicking button Start.
 function setImage() {
   const imgForPlayerOne = imgDom[0].setAttribute("src", randomDiceImage());
-  const imgForPlayerTwo = imgDom[1].setAttribute("src", randomDiceImage());
+  setTimeout(function () {
+      const imgForPlayerTwo = imgDom[1].setAttribute("src", randomDiceImage());
+  }, 150);
 }
 //Function determines winer.
 function gameResult() {
@@ -78,6 +81,7 @@ function gameResult() {
   }
   playerOneScoreDom.textContent = playerOneScore;
   playerTwoScoreDom.textContent = playerTwoScore;
+  document.querySelector(".btn-start").textContent = "Refresh";
 }
 //Set player's name.
 function setName(event) {
@@ -120,8 +124,12 @@ function setName(event) {
     }
   }
 }
-//Toggle buttons Add name.
+//Reset all information to the beginning of the game.
 function buttonNameToggle(event) {
+
+  document.querySelector(".score-Player1").hidden = true;
+  document.querySelector(".score-Player2").hidden = true;
+  document.querySelector(".btn-start").textContent = "Start";
 
   if (event.target.name === 'button1') {
     playerNameButtons[0].hidden = true;
@@ -139,11 +147,11 @@ function buttonNameToggle(event) {
       player2.appendChild(playerNameButtons[1]);
       playerNameButtons[1].hidden = false;
     } else if (playerNameButtons[0].hasAttribute("hidden") === true && playerNameButtons[1].hasAttribute("hidden") === true) {
+
       playerOneScore = 0;
       playerTwoScore = 0;
       playerOneName = undefined;
       playerTwoName = undefined;
-      //
       player1.textContent = "";
       player2.textContent = "";
       player1.appendChild(playerNameButtons[0]);
@@ -165,8 +173,8 @@ function buttonNameToggle(event) {
     }
   }
 }
-//
-function addScoreBlock(){
+// Hide score after reloading the game to the beginning.
+function addScoreBlock() {
   document.querySelector(".score-Player1").hidden = false;
   document.querySelector(".score-Player2").hidden = false;
 }
