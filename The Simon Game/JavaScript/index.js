@@ -11,6 +11,7 @@ $(document).on('keydown', (e) => {
   if (!started) {
     $('h1').text('Level:' + gameLevel);
     gameColorSequence();
+
     started = true;
   }
 });
@@ -32,7 +33,7 @@ $('.btn').on('click', (e) => {
       }, 700);
       setTimeout(function() {
         gameColorSequence();
-      }, 500);
+      }, 400);
       gamePattern = [];
     }
   } else {
@@ -53,7 +54,7 @@ function gameColorSequence() {
   for (let i = 1; i <= userClickedPattern.length; i++) {
     setTimeout(function() {
       pressedButton(userClickedPattern[i - 1]);
-    }, 1200 * i);
+    }, 1000 * i);
   }
 }
 //Sound playback function.
