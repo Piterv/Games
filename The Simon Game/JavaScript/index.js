@@ -8,12 +8,12 @@ const mySounds = {
 }
 let userSequence = [];
 let gameSequence = [];
-let gameLevel = [];
+let gameLevel = 0;
 
 // Listen to keydown
 $(document).on('keydown', (e) => {
   if (gameSequence.length === 0) {
-    $('h1').text('Level:' + gameLevel.length);
+    $('h1').text('Level:' + gameLevel);
     gameColorSequence();
   }
 });
@@ -28,18 +28,24 @@ $('.btn').on('click', (e) => {
     playSound(e.target.id);
 
     if (userSequence.length === gameSequence.length) {
-      gameColorSequence();
+      gameLevel++;
+      setTimeout(function() {
+        $('h1').text('Level:' + gameLevel);
+      }, 800);
+      setTimeout(function() {
+        gameColorSequence();
+      }, 600);
       userSequence = [];
     }
   } else {
     playSound('wrong');
     userSequence = [];
     gameSequence = [];
-    gameLevel = [];
+    gameLevel = ;
+    $('h1').text('Press A Key to Start');
   }
-
 });
-//Function display color sequence from game Sequence array.\
+//The function displays a sequence of colors from the Sequence game array.
 function gameColorSequence() {
   rundomColor();
   console.log(gameSequence);
@@ -49,17 +55,17 @@ function gameColorSequence() {
     }, 1200 * i);
   }
 }
-//Function play sound.
+//Sound playback function.
 function playSound(sound) {
   const audio = new Audio(mySounds[sound]);
   audio.play();
 }
-// Set rundom number.
+// Sets random color.
 function rundomColor() {
   let rundomNumber = Math.floor(Math.random() * 4);
   gameSequence.push(color[rundomNumber]);
 }
-//Add clase that show presed button.
+//Adds class that show pressed button.
 function pressedButton(e) {
   $('#' + e).addClass('pressed').delay(250).queue(function(next) {
     $(this).removeClass('pressed');
